@@ -10,31 +10,26 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * Created by MSI on 05/03/2018.
+ * Created by Simon Jacobs on 05/03/2018.
+ * Handles the action(s) when an alarm is going off.
  */
 
 public class MyBroadcastReceiver extends BroadcastReceiver {
-    private static final String TAG = "MyBroadcastReceiver";
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        //StringBuilder sb = new StringBuilder();
-        //sb.append("Action: " + intent.getAction() + "\n");
-        //sb.append("URI: " + intent.toUri(Intent.URI_INTENT_SCHEME).toString() + "\n");
-        //String log = sb.toString();
-
-        String log = "Yoo";
-        Log.d(TAG, log);
-        Toast.makeText(context, log, Toast.LENGTH_LONG).show();
-        System.out.println("IT WORKS!");
-
-
-
+        
+        // Make toast
+        Toast.makeText(context, "Wake up!", Toast.LENGTH_LONG).show();
+        System.out.println("Received broadcast.");
+        
+        // play ringtone
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         MediaPlayer thePlayer = MediaPlayer.create(context.getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-
         thePlayer.setVolume(10, 10);
         thePlayer.start();
-
+        
+        // Do something else
 
     }
 }
