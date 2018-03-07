@@ -26,22 +26,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent intent = new Intent();
-        //intent.setAction("com.example.broadcast.MY_NOTIFICATION");
-       // intent.putExtra("data","Notice me senpai!");
-        //sendBroadcast(intent);
-
-
         Button buttonSet =  findViewById(R.id.buttonSet);
         buttonSet.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
 
-
-
-                // for Alarm 25/12/2012 at 12.00
-                // for alarm 5-3-2018 at 14:55
                 //Calendar myAlarmDate = Calendar.getInstance();
                 Calendar myAlarmDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                 myAlarmDate.setTimeInMillis(System.currentTimeMillis());
@@ -71,43 +61,19 @@ public class MainActivity extends AppCompatActivity {
                                 minute);
 
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                Intent _myIntent = new Intent(MainActivity.this, MyBroadcastReceiver.class);
-                _myIntent.putExtra("MyMessage","HERE I AM PASSING THEPERTICULAR MESSAGE WHICH SHOULD BE SHOW ON RECEIVER OF ALARM");
-                PendingIntent _myPendingIntent = PendingIntent.getBroadcast(MainActivity.this, 123, _myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Intent intent = new Intent(MainActivity.this, MyBroadcastReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 123, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-                // USE TIME
-                alarmManager.set(AlarmManager.RTC_WAKEUP, myAlarmDate.getTimeInMillis(),_myPendingIntent);
-                // USE 10 seconds.
-                //alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+20000,_myPendingIntent);
-
-
+                alarmManager.set(AlarmManager.RTC_WAKEUP, myAlarmDate.getTimeInMillis(),pendingIntent);
 
                 System.out.println("Now: " + Calendar.getInstance().getTime().toString());
                 System.out.println("Alarm: "+myAlarmDate.getTime().toString());
 
-                String log = "Alarm set for " + myAlarmDate.getTime().toString();
-                Log.d("?", log);
-                Toast.makeText(getApplicationContext(), log, Toast.LENGTH_LONG).show();
+                String toastText = "Alarm set for " + myAlarmDate.getTime().toString();
+                Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_LONG).show();
 
                 TextView tv = findViewById(R.id.textView);
                 tv.setText("Alarm set");
-
-                /*
-                System.out.println("Button clicked");
-                int time = 8000;
-                Intent intent = new Intent(MainActivity.this, MyBroadcastReceiver.class);
-                intent.setAction("com.example.broadcast.MY_NOTIFICATION");
-                PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
-
-                AlarmManager mgr = (AlarmManager) getSystemService(ALARM_SERVICE);
-                mgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+time+1000, pIntent);
-                */
-
-
-
-
-
             }
         });
     }
